@@ -1,15 +1,26 @@
-[![pypi](https://img.shields.io/pypi/v/shiv.svg)](https://pypi.python.org/pypi/shiv)
-[![ci](https://github.com/linkedin/shiv/workflows/ci/badge.svg)](https://github.com/linkedin/shiv/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/linkedin/shiv/branch/master/graph/badge.svg)](https://codecov.io/gh/linkedin/shiv)
-[![docs](https://readthedocs.org/projects/shiv/badge/?version=latest)](http://shiv.readthedocs.io/en/latest/?badge=latest)
+[![pypi](https://img.shields.io/pypi/v/shiv-userdirs.svg)](https://pypi.python.org/pypi/shiv-userdirs)
 [![license](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-[![supported](https://img.shields.io/pypi/pyversions/shiv.svg)](https://pypi.python.org/pypi/shiv)
+[![supported](https://img.shields.io/pypi/pyversions/shiv-userdirs.svg)](https://pypi.python.org/pypi/shiv-userdirs)
 
 ![snake](https://github.com/linkedin/shiv/raw/main/logo.png)
 
-# shiv
+# shiv-userdirs
 
-**Python SHIV-version, which creates user owned directires if SHIV_ROOT is used.**
+> **Project Status: Archived**
+>
+> This fork was created to work around a limitation in the original [linkedin/shiv](https://github.com/linkedin/shiv):
+> when `SHIV_ROOT` pointed to a shared directory, shiv would extract into that directory without any per-user isolation.
+> This caused permission problems in multi-user environments — especially for service accounts without a writable home directory.
+> The workaround creates a user-owned subdirectory (`<SHIV_ROOT>/<uid>/`, chmod 700) so that each user has an isolated extraction path.
+>
+> The projects that relied on this fork have since been migrated to AppImage deployment using
+> [ssh-mitm/appimage](https://github.com/ssh-mitm/appimage) ([PyPI](https://pypi.org/project/appimage/)),
+> so this package is no longer maintained. It is published to PyPI for archival purposes only.
+>
+> If you need continued development or have a use case for this approach, feel free to reach out to
+> [Manfred Kaiser](mailto:manfred.kaiser@ssh-mitm.at) or open an issue on [GitHub](https://github.com/manfred-kaiser/shiv-userdirs).
+
+**Python SHIV-version, which creates user-owned directories if SHIV_ROOT is used.**
 
 shiv is a command line utility for building fully self-contained Python zipapps as outlined in [PEP 441](https://www.python.org/dev/peps/pep-0441/), but with all their dependencies included!
 
@@ -57,10 +68,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ### installing
 
-You can install shiv by simply downloading a release from https://github.com/linkedin/shiv/releases or via `pip` / `pypi`:
-
 ```sh
-pip install shiv
+pip install shiv-userdirs
 ```
 
 You can even create a pyz _of_ shiv _using_ shiv!
@@ -68,36 +77,8 @@ You can even create a pyz _of_ shiv _using_ shiv!
 ```sh
 python3 -m venv .
 source bin/activate
-pip install shiv
-shiv -c shiv -o shiv shiv
-```
-
-### developing
-
-We'd love contributions! Getting bootstrapped to develop is easy:
-
-```sh
-git clone git@github.com:linkedin/shiv.git
-cd shiv
-python3 -m venv venv
-source ./venv/bin/activate
-python3 -m pip install --upgrade build
-python3 -m build
-python3 -m pip install -e .
-```
-
-Don't forget to run and write tests:
-
-```sh
-python3 -m pip install tox
-tox
-```
-
-To build documentation when you changed something in `docs`:
-
-```sh
-python3 -m pip install -r docs/requirements.txt
-sphinx-build docs build/html
+pip install shiv-userdirs
+shiv -c shiv -o shiv shiv-userdirs
 ```
 
 ### gotchas
